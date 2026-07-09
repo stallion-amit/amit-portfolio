@@ -1,0 +1,324 @@
+/* Distinctive portfolio layer: premium motion, sharper hierarchy, and tactile proof cards. */
+:root {
+  --ak-ink: hsl(var(--primary));
+  --ak-accent: hsl(var(--accent));
+  --ak-line: hsl(var(--primary) / 0.12);
+  --ak-glass: hsl(var(--primary-foreground) / 0.075);
+}
+
+html {
+  background:
+    linear-gradient(90deg, hsl(var(--primary) / 0.025) 1px, transparent 1px),
+    linear-gradient(180deg, hsl(var(--primary) / 0.018) 1px, transparent 1px),
+    hsl(var(--background));
+  background-size: 112px 112px, 112px 112px, auto;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(120deg, transparent 0 42%, hsl(var(--accent) / 0.055) 48%, transparent 56%),
+    linear-gradient(180deg, hsl(var(--primary) / 0.035), transparent 38%, hsl(var(--primary) / 0.025));
+  mix-blend-mode: multiply;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+.ak-spotlight {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 24rem;
+  height: 24rem;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  transform: translate3d(calc(var(--ak-x, 50vw) - 12rem), calc(var(--ak-y, 50vh) - 12rem), 0);
+  background: radial-gradient(circle, hsl(var(--accent) / 0.11), transparent 64%);
+  transition: opacity 0.25s ease;
+  mix-blend-mode: multiply;
+}
+
+body.ak-pointer .ak-spotlight {
+  opacity: 1;
+}
+
+#root section:first-of-type {
+  isolation: isolate;
+}
+
+#root section:first-of-type::before {
+  content: "";
+  position: absolute;
+  inset: 9rem auto auto 55%;
+  width: min(38vw, 32rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid hsl(var(--primary-foreground) / 0.16);
+  background:
+    linear-gradient(90deg, hsl(var(--primary-foreground) / 0.12) 1px, transparent 1px),
+    linear-gradient(180deg, hsl(var(--primary-foreground) / 0.1) 1px, transparent 1px),
+    conic-gradient(from 110deg, transparent 0deg, hsl(var(--accent) / 0.5) 28deg, transparent 64deg);
+  background-size: 32px 32px, 32px 32px, auto;
+  mask-image: radial-gradient(circle, black 0 62%, transparent 63%);
+  opacity: 0.46;
+  animation: ak-radar 18s linear infinite;
+  z-index: -1;
+}
+
+#root section:first-of-type::after {
+  content: "GLOBAL EXECUTION SYSTEM";
+  position: absolute;
+  right: clamp(1rem, 5vw, 5rem);
+  bottom: clamp(3rem, 8vw, 7rem);
+  z-index: -1;
+  color: hsl(var(--primary-foreground) / 0.045);
+  font-family: JetBrains Mono, ui-monospace, monospace;
+  font-size: clamp(2.5rem, 8vw, 7.5rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: 0.04em;
+  writing-mode: vertical-rl;
+}
+
+.display-h1 span,
+.display-h2 span {
+  position: relative;
+  display: inline-block;
+}
+
+.display-h1 span::after,
+.display-h2 span::after {
+  content: "";
+  position: absolute;
+  left: -0.08em;
+  right: -0.08em;
+  bottom: 0.08em;
+  height: 0.22em;
+  z-index: -1;
+  background: linear-gradient(90deg, hsl(var(--accent) / 0.3), hsl(var(--accent) / 0.08));
+  transform: skewX(-12deg);
+}
+
+nav a[aria-current="page"] {
+  text-shadow: 0 0 18px hsl(var(--accent) / 0.2);
+}
+
+nav .btn-accent-glow,
+.btn-accent-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+nav .btn-accent-glow::after,
+.btn-accent-glow::after {
+  content: "";
+  position: absolute;
+  inset: -120% auto -120% -60%;
+  width: 42%;
+  transform: rotate(18deg);
+  background: linear-gradient(90deg, transparent, hsl(var(--accent-foreground) / 0.42), transparent);
+  animation: ak-sweep 5.4s ease-in-out infinite;
+}
+
+.section-header {
+  position: relative;
+}
+
+.section-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: min(12rem, 38%);
+  height: 2px;
+  background: linear-gradient(90deg, hsl(var(--accent)), transparent);
+  transform-origin: left;
+  animation: ak-section-line 4.8s ease-in-out infinite;
+}
+
+.section-header .num {
+  text-shadow: 0 12px 30px hsl(var(--accent) / 0.22);
+}
+
+.ak-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.ak-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ak-card-tilt {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transform: perspective(900px) rotateX(var(--ak-rx, 0deg)) rotateY(var(--ak-ry, 0deg)) translateY(0);
+  transition:
+    transform 0.24s ease,
+    box-shadow 0.24s ease,
+    border-color 0.24s ease,
+    background-color 0.24s ease;
+}
+
+.ak-card-tilt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at var(--ak-mx, 50%) var(--ak-my, 50%), hsl(var(--accent) / 0.16), transparent 34%),
+    linear-gradient(135deg, transparent, hsl(var(--primary) / 0.035));
+  transition: opacity 0.24s ease;
+}
+
+.ak-card-tilt:hover,
+.ak-card-tilt:focus-within {
+  border-color: hsl(var(--accent) / 0.38) !important;
+  box-shadow: 0 26px 60px -42px hsl(var(--primary) / 0.65), 0 0 0 1px hsl(var(--accent) / 0.14);
+  transform: perspective(900px) rotateX(var(--ak-rx, 0deg)) rotateY(var(--ak-ry, 0deg)) translateY(-3px);
+}
+
+.ak-card-tilt:hover::before,
+.ak-card-tilt:focus-within::before {
+  opacity: 1;
+}
+
+#impact .grid > div,
+#case-studies .grid > div,
+#expertise .grid > div,
+#contact .grid > a,
+#contact .grid > div {
+  backdrop-filter: blur(12px);
+}
+
+#case-studies .grid {
+  box-shadow: 0 30px 80px -58px hsl(var(--primary) / 0.72);
+}
+
+#case-studies button,
+#case-studies a,
+#expertise .grid > div,
+#impact .grid > div {
+  will-change: transform;
+}
+
+#leadership {
+  position: relative;
+}
+
+#leadership::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.26;
+  background:
+    linear-gradient(115deg, transparent 0 44%, hsl(var(--accent) / 0.24) 45%, transparent 47%),
+    repeating-linear-gradient(90deg, transparent 0 4rem, hsl(var(--primary-foreground) / 0.055) 4rem calc(4rem + 1px));
+  animation: ak-flow 16s linear infinite;
+}
+
+#contact > div > div:first-child {
+  transform: translateZ(0);
+}
+
+#contact > div > div:first-child::before {
+  animation: ak-grid-drift 14s linear infinite;
+}
+
+@keyframes ak-radar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ak-sweep {
+  0%,
+  62% {
+    transform: translateX(0) rotate(18deg);
+    opacity: 0;
+  }
+  70% {
+    opacity: 0.75;
+  }
+  100% {
+    transform: translateX(560%) rotate(18deg);
+    opacity: 0;
+  }
+}
+
+@keyframes ak-section-line {
+  0%,
+  100% {
+    transform: scaleX(0.42);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@keyframes ak-flow {
+  to {
+    background-position: 18rem 0, 9rem 0;
+  }
+}
+
+@keyframes ak-grid-drift {
+  to {
+    background-position: 48px 48px, 48px 48px;
+  }
+}
+
+@media (max-width: 767px) {
+  .ak-spotlight {
+    display: none;
+  }
+
+  #root section:first-of-type::before {
+    inset: 8rem auto auto 35%;
+    width: 20rem;
+    opacity: 0.28;
+  }
+
+  #root section:first-of-type::after {
+    display: none;
+  }
+
+  .ak-reveal {
+    transform: translateY(14px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .ak-reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
