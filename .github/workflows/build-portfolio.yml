@@ -1,0 +1,170 @@
+name: Build portfolio files
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create portfolio replica
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p assets .github/workflows
+
+          curl -fsSL https://amitthrive.lovable.app/assets/index-CoiUbf6d.css -o assets/index-CoiUbf6d.css
+          curl -fsSL https://amitthrive.lovable.app/assets/index-CW5tqhQL.js -o assets/index-CW5tqhQL.js
+          curl -fsSL https://amitthrive.lovable.app/assets/amit-photo-llD3CxAJ.png -o assets/amit-photo-llD3CxAJ.png
+
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('assets/index-CW5tqhQL.js')
+          s = p.read_text()
+          s = s.replace('wA="/assets/amit-photo-llD3CxAJ.png"', 'wA=new URL("assets/amit-photo-llD3CxAJ.png",document.baseURI).pathname')
+          s = s.replace('Fa="https://amitthrive.lovable.app"', 'Fa=location.origin+(window.__BASE_PATH__||"")')
+          s = s.replace('ii="https://amitthrive.lovable.app"', 'ii=location.origin+(window.__BASE_PATH__||"")')
+          s = s.replace('image:`${Fa}/amit-photo.png`', 'image:`${Fa}/assets/amit-photo-llD3CxAJ.png`')
+          s = s.replace('u.jsx(fA,{children:u.jsxs(iA', 'u.jsx(fA,{basename:window.__BASE_PATH__||"/",children:u.jsxs(iA')
+          p.write_text(s)
+          PY
+
+          cat > index.html <<'HTML'
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <meta charset="UTF-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+              <script>
+                (function () {
+                  var firstPath = location.pathname.split("/").filter(Boolean)[0];
+                  var isGithubProjectPage = location.hostname.endsWith(".github.io") && firstPath;
+                  var basePath = isGithubProjectPage ? "/" + firstPath + "/" : "/";
+                  window.__BASE_PATH__ = basePath === "/" ? "/" : basePath.slice(0, -1);
+                  document.write('<base href="' + basePath + '">');
+                })();
+              </script>
+
+              <title>Amit Kothari, Senior Technical Program Leader | AI, Payments, Platforms</title>
+              <meta name="description" content="Amit Kothari leads high-stakes technology transformation across AI, payments, platforms, and regulated systems. 14+ years driving measurable business outcomes." />
+              <meta name="author" content="Amit Kothari" />
+              <meta property="og:site_name" content="Amit Kothari" />
+              <meta property="og:type" content="website" />
+              <meta property="og:title" content="Amit Kothari, Senior Technical Program Leader | AI, Payments, Platforms" />
+              <meta property="og:description" content="Amit Kothari leads high-stakes technology transformation across AI, payments, platforms, and regulated systems. 14+ years driving measurable business outcomes." />
+              <meta property="og:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/87767d2f-0a5d-4065-b859-b905b94f7379" />
+              <meta name="twitter:card" content="summary_large_image" />
+              <meta name="twitter:title" content="Amit Kothari, Senior Technical Program Leader | AI, Payments, Platforms" />
+              <meta name="twitter:description" content="Amit Kothari leads high-stakes technology transformation across AI, payments, platforms, and regulated systems. 14+ years driving measurable business outcomes." />
+              <meta name="twitter:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/87767d2f-0a5d-4065-b859-b905b94f7379" />
+
+              <script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "Person",
+                  "name": "Amit Kothari",
+                  "jobTitle": "Senior Technical Program Leader",
+                  "description": "Senior Technical Program Leader with 14+ years driving AI, payments, platform, and regulated systems transformation.",
+                  "knowsAbout": ["AI Platforms", "Agentic AI", "Payments", "FinTech", "Platform Engineering", "Risk & Compliance", "Technical Program Management"],
+                  "sameAs": ["https://www.linkedin.com/in/amitkpm"]
+                }
+              </script>
+
+              <link rel="preconnect" href="https://fonts.googleapis.com" />
+              <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+              <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+              <script type="module" crossorigin src="assets/index-CW5tqhQL.js"></script>
+              <link rel="stylesheet" crossorigin href="assets/index-CoiUbf6d.css" />
+            </head>
+            <body>
+              <div id="root"></div>
+            </body>
+          </html>
+          HTML
+
+          cp index.html 404.html
+
+          cat > README.md <<'MD'
+          # Amit Kothari Portfolio
+
+          Static GitHub Pages-ready replica of the Amit Kothari portfolio originally published at `https://amitthrive.lovable.app/`.
+
+          ## Project Structure
+
+          - `index.html` - production entry page
+          - `404.html` - GitHub Pages fallback for client-side routes
+          - `assets/` - production CSS, JavaScript, and image assets
+          - `.github/workflows/pages.yml` - GitHub Pages deployment workflow
+          - `.nojekyll` - keeps GitHub Pages from processing the static build with Jekyll
+          MD
+
+          cat > .gitignore <<'GITIGNORE'
+          .DS_Store
+          node_modules/
+          dist/
+          .env
+          .env.*
+          GITIGNORE
+
+          cat > .nojekyll <<'NOJEKYLL'
+          # Disables Jekyll processing on GitHub Pages.
+          NOJEKYLL
+
+          cat > .github/workflows/pages.yml <<'YAML'
+          name: Deploy Portfolio to GitHub Pages
+
+          on:
+            push:
+              branches:
+                - main
+            workflow_dispatch:
+
+          permissions:
+            contents: read
+            pages: write
+            id-token: write
+
+          concurrency:
+            group: pages
+            cancel-in-progress: false
+
+          jobs:
+            deploy:
+              environment:
+                name: github-pages
+                url: ${{ steps.deployment.outputs.page_url }}
+              runs-on: ubuntu-latest
+              steps:
+                - name: Checkout
+                  uses: actions/checkout@v4
+                - name: Setup Pages
+                  uses: actions/configure-pages@v5
+                - name: Upload artifact
+                  uses: actions/upload-pages-artifact@v3
+                  with:
+                    path: .
+                - name: Deploy to GitHub Pages
+                  id: deployment
+                  uses: actions/deploy-pages@v4
+          YAML
+
+      - name: Commit generated portfolio
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Generate portfolio replica"
+            git push
+          fi
