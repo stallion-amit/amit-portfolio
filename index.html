@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        var firstPath = location.pathname.split("/").filter(Boolean)[0];
+        var isGithubProjectPage = location.hostname.endsWith(".github.io") && firstPath;
+        var basePath = isGithubProjectPage ? "/" + firstPath + "/" : "/";
+        window.__BASE_PATH__ = basePath === "/" ? "/" : basePath.slice(0, -1);
+        document.write('<base href="' + basePath + '">');
+      })();
+    </script>
+
+    <title>Amit Kothari, Senior Technical Program Leader | AI, Payments, Platforms</title>
+    <meta
+      name="description"
+      content="Amit Kothari leads high-stakes technology transformation across AI, payments, platforms, and regulated systems. 14+ years driving measurable business outcomes."
+    />
+    <meta name="author" content="Amit Kothari" />
+    <meta property="og:site_name" content="Amit Kothari" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Amit Kothari, Senior Technical Program Leader | AI, Payments, Platforms" />
+    <meta
+      property="og:description"
+      content="Amit Kothari leads high-stakes technology transformation across AI, payments, platforms, and regulated systems. 14+ years driving measurable business outcomes."
+    />
+    <meta property="og:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/87767d2f-0a5d-4065-b859-b905b94f7379" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Amit Kothari, Senior Technical Program Leader | AI, Payments, Platforms" />
+    <meta
+      name="twitter:description"
+      content="Amit Kothari leads high-stakes technology transformation across AI, payments, platforms, and regulated systems. 14+ years driving measurable business outcomes."
+    />
+    <meta name="twitter:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/87767d2f-0a5d-4065-b859-b905b94f7379" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Amit Kothari",
+        "jobTitle": "Senior Technical Program Leader",
+        "description": "Senior Technical Program Leader with 14+ years driving AI, payments, platform, and regulated systems transformation.",
+        "knowsAbout": ["AI Platforms", "Agentic AI", "Payments", "FinTech", "Platform Engineering", "Risk & Compliance", "Technical Program Management"],
+        "sameAs": ["https://www.linkedin.com/in/amitkpm"]
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="assets/index-CW5tqhQL.js"></script>
+    <link rel="stylesheet" crossorigin href="assets/index-CoiUbf6d.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
