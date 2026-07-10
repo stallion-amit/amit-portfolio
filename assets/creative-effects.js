@@ -12,6 +12,34 @@
   ready(function () {
     document.documentElement.classList.add("ak-enhanced");
 
+    var hero = document.querySelector("#root section:first-of-type");
+    var heroTextColumn = hero && hero.querySelector(".lg\\:col-span-9");
+    var heroSideColumn = hero && hero.querySelector(".lg\\:col-span-3");
+
+    if (hero && !hero.querySelector(".ak-hero-console")) {
+      var consolePanel = document.createElement("aside");
+      consolePanel.className = "ak-hero-console";
+      consolePanel.setAttribute("aria-label", "Execution signal dashboard");
+      consolePanel.innerHTML =
+        '<div class="ak-console-top"><span>Execution Signal</span><span class="ak-console-live">Live</span></div>' +
+        '<div class="ak-console-grid">' +
+        '<div class="ak-console-node" style="--ak-delay: 0s"><span>AI Adoption</span><strong>88%</strong></div>' +
+        '<div class="ak-console-node" style="--ak-delay: .35s"><span>Scale Readiness</span><strong>20K TPS</strong></div>' +
+        '<div class="ak-console-node" style="--ak-delay: .7s"><span>Migration</span><strong>0 Downtime</strong></div>' +
+        '<div class="ak-console-node" style="--ak-delay: 1.05s"><span>Impact</span><strong>$12M+</strong></div>' +
+        '</div>' +
+        '<div class="ak-flow-row"><span>Ambiguity</span><i></i><span>Operating Model</span><i></i><span>Outcomes</span></div>';
+
+      if (window.matchMedia("(max-width: 767px)").matches && heroTextColumn) {
+        heroTextColumn.appendChild(consolePanel);
+      } else if (heroSideColumn) {
+        var ctaStack = heroSideColumn.querySelector(".mt-6");
+        heroSideColumn.insertBefore(consolePanel, ctaStack || null);
+      } else {
+        hero.appendChild(consolePanel);
+      }
+    }
+
     if (!reduceMotion) {
       var spotlight = document.createElement("div");
       spotlight.className = "ak-spotlight";
