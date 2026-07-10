@@ -90,8 +90,8 @@ body.ak-pointer .ak-spotlight {
 #root section:first-of-type {
   isolation: isolate;
   min-height: auto !important;
-  padding-top: clamp(6.5rem, 10vh, 8rem) !important;
-  padding-bottom: clamp(3rem, 5vh, 4.25rem) !important;
+  padding-top: clamp(6rem, 8vh, 7.2rem) !important;
+  padding-bottom: clamp(2.5rem, 4.5vh, 3.5rem) !important;
 }
 
 #root section:first-of-type::before {
@@ -135,10 +135,10 @@ body.ak-pointer .ak-spotlight {
 }
 
 #root section:first-of-type .display-h1 {
-  max-width: 12.8ch;
-  font-size: clamp(3.25rem, 6.8vw, 6.85rem) !important;
-  line-height: 0.9 !important;
-  letter-spacing: -0.02em !important;
+  max-width: 14.8ch;
+  font-size: clamp(3.05rem, 5.15vw, 5.55rem) !important;
+  line-height: 0.94 !important;
+  letter-spacing: 0 !important;
   text-wrap: balance;
 }
 
@@ -152,23 +152,40 @@ body.ak-pointer .ak-spotlight {
 
 #root section:first-of-type .mt-20,
 #root section:first-of-type .lg\:mt-28 {
-  margin-top: clamp(2.4rem, 5vh, 4.2rem) !important;
+  margin-top: clamp(2rem, 4vh, 3.2rem) !important;
 }
 
 #root section:first-of-type .stat-num {
   filter: drop-shadow(0 16px 24px hsl(var(--primary) / 0.18));
 }
 
+@media (min-width: 1024px) {
+  #root section:first-of-type > div > div:nth-of-type(2) {
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.44fr) !important;
+    gap: clamp(2rem, 4vw, 4.5rem) !important;
+    align-items: center !important;
+  }
+
+  #root section:first-of-type > div > div:nth-of-type(2) > div {
+    grid-column: auto / auto !important;
+  }
+
+  #root section:first-of-type > div > div:nth-of-type(2) > div:last-child {
+    align-self: center;
+    padding-left: clamp(1.5rem, 2vw, 2rem) !important;
+  }
+}
+
 .ak-hero-console {
-  --ak-mode-hue: var(--accent);
+  --ak-mode-hue: 22 95% 58%;
   position: relative;
   z-index: 1;
   width: 100%;
   min-width: 0;
-  margin-top: 1.35rem;
+  margin-top: 0;
   border: 1px solid hsl(var(--ak-mode-hue) / 0.34);
   border-radius: 1rem;
-  padding: 0.85rem;
+  padding: 1rem;
   color: hsl(var(--primary-foreground));
   background:
     linear-gradient(135deg, hsl(var(--primary-foreground) / 0.12), hsl(var(--primary-foreground) / 0.035)),
@@ -194,6 +211,11 @@ body.ak-pointer .ak-spotlight {
 
 .ak-console-top,
 .ak-console-grid,
+.ak-command-orbit,
+.ak-command-copy,
+.ak-command-loop,
+.ak-signal-board,
+.ak-console-note,
 .ak-mode-stage,
 .ak-mode-copy,
 .ak-mode-rail,
@@ -229,6 +251,221 @@ body.ak-pointer .ak-spotlight {
   background: hsl(var(--ak-mode-hue));
   box-shadow: 0 0 0 0 hsl(var(--ak-mode-hue) / 0.5);
   animation: ak-pulse-ring 1.8s ease-out infinite;
+}
+
+.ak-command-center {
+  display: grid;
+  gap: 0.95rem;
+}
+
+.ak-command-orbit {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 8.1rem;
+  border-radius: 0.85rem;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 54%, hsl(var(--accent) / 0.28), transparent 30%),
+    linear-gradient(135deg, hsl(var(--primary-foreground) / 0.09), hsl(var(--primary) / 0.08));
+  border: 1px solid hsl(var(--primary-foreground) / 0.1);
+}
+
+.ak-command-orbit::before,
+.ak-command-orbit::after,
+.ak-command-orbit span {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid hsl(var(--accent) / 0.28);
+  animation: ak-orbit-pulse 4.8s ease-in-out infinite;
+}
+
+.ak-command-orbit::before {
+  width: 7.6rem;
+  height: 7.6rem;
+}
+
+.ak-command-orbit::after {
+  width: 5.5rem;
+  height: 5.5rem;
+  animation-delay: -1.8s;
+}
+
+.ak-command-orbit span {
+  --ak-tx: 0;
+  --ak-ty: 0;
+  width: 2.9rem;
+  height: 2.9rem;
+  background:
+    radial-gradient(circle at 30% 24%, hsl(var(--primary-foreground) / 0.34), transparent 28%),
+    hsl(var(--accent) / 0.28);
+  box-shadow: 0 0 36px hsl(var(--accent) / 0.36);
+}
+
+.ak-command-orbit span:nth-child(2) {
+  --ak-tx: -3rem;
+  --ak-ty: -1.65rem;
+  animation-delay: -0.7s;
+}
+
+.ak-command-orbit span:nth-child(3) {
+  --ak-tx: 3.05rem;
+  --ak-ty: 1.45rem;
+  animation-delay: -1.3s;
+}
+
+.ak-command-orbit strong {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 4.05rem;
+  height: 4.05rem;
+  border-radius: 1rem;
+  font-family: Fraunces, "Inter Tight", serif;
+  font-size: 1.32rem;
+  color: hsl(var(--primary-foreground));
+  background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent) / 0.68));
+  box-shadow: 0 22px 46px -24px hsl(var(--accent) / 0.95);
+}
+
+.ak-command-copy span {
+  display: block;
+  margin-bottom: 0.28rem;
+  font-family: JetBrains Mono, ui-monospace, monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: hsl(var(--accent));
+}
+
+.ak-command-copy strong {
+  display: block;
+  max-width: 13rem;
+  font-family: Fraunces, "Inter Tight", serif;
+  font-size: clamp(1.34rem, 1.85vw, 1.65rem);
+  line-height: 1;
+  font-weight: 600;
+}
+
+.ak-command-copy p {
+  margin-top: 0.48rem;
+  font-size: 0.86rem !important;
+  line-height: 1.45;
+  color: hsl(var(--primary-foreground) / 0.68);
+}
+
+.ak-command-loop {
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr auto 1fr auto;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.58rem;
+  border-radius: 999px;
+  border: 1px solid hsl(var(--primary-foreground) / 0.1);
+  background: hsl(var(--primary) / 0.3);
+  color: hsl(var(--primary-foreground) / 0.74);
+  font-size: 0.66rem;
+  font-weight: 700;
+}
+
+.ak-command-loop i {
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(var(--accent)), transparent);
+  animation: ak-flow-line 1.8s ease-in-out infinite;
+}
+
+.ak-signal-board {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.48rem;
+}
+
+.ak-signal-board div {
+  display: grid;
+  gap: 0.18rem;
+  padding: 0.68rem 0.72rem;
+  border-radius: 0.72rem;
+  border: 1px solid hsl(var(--accent) / 0.16);
+  background: hsl(var(--primary) / 0.24);
+}
+
+.ak-signal-board span {
+  font-family: JetBrains Mono, ui-monospace, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: hsl(var(--primary-foreground) / 0.48);
+}
+
+.ak-signal-board strong {
+  font-size: 0.85rem;
+  line-height: 1.2;
+  color: hsl(var(--primary-foreground) / 0.9);
+}
+
+.ak-console-note {
+  padding-top: 0.3rem;
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: hsl(var(--primary-foreground) / 0.58);
+}
+
+.ak-proof-marquee {
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid hsl(var(--primary) / 0.08);
+  border-bottom: 1px solid hsl(var(--primary) / 0.08);
+  background: hsl(var(--background));
+}
+
+.ak-proof-marquee::before,
+.ak-proof-marquee::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  width: clamp(2rem, 8vw, 7rem);
+  pointer-events: none;
+}
+
+.ak-proof-marquee::before {
+  left: 0;
+  background: linear-gradient(90deg, hsl(var(--background)), transparent);
+}
+
+.ak-proof-marquee::after {
+  right: 0;
+  background: linear-gradient(270deg, hsl(var(--background)), transparent);
+}
+
+.ak-proof-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  font-family: JetBrains Mono, ui-monospace, monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: hsl(var(--primary) / 0.62);
+  animation: ak-marquee 28s linear infinite;
+}
+
+.ak-proof-track i {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: hsl(var(--accent));
+  box-shadow: 0 0 0.85rem hsl(var(--accent) / 0.42);
+}
+
+#about {
+  padding-top: clamp(3.75rem, 6vw, 5.5rem) !important;
 }
 
 .ak-mode-map {
@@ -622,6 +859,18 @@ nav .btn-accent-glow::after,
   }
 }
 
+@keyframes ak-orbit-pulse {
+  0%,
+  100% {
+    opacity: 0.52;
+    transform: translate(var(--ak-tx, 0), var(--ak-ty, 0)) scale(0.94);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(var(--ak-tx, 0), var(--ak-ty, 0)) scale(1.04);
+  }
+}
+
 @keyframes ak-mode-ring {
   0% {
     opacity: 0.72;
@@ -676,6 +925,12 @@ nav .btn-accent-glow::after,
   }
 }
 
+@keyframes ak-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 @keyframes ak-card-pop {
   from {
     transform: perspective(900px) translateY(18px) scale(0.985);
@@ -702,13 +957,13 @@ nav .btn-accent-glow::after,
 
   #root section:first-of-type {
     padding-top: 6rem !important;
-    padding-bottom: 2.6rem !important;
+    padding-bottom: 2.2rem !important;
   }
 
   #root section:first-of-type .display-h1 {
-    max-width: 12ch;
-    font-size: clamp(2.8rem, 14vw, 4.2rem) !important;
-    line-height: 0.93 !important;
+    max-width: 13ch;
+    font-size: clamp(2.55rem, 10.5vw, 3.5rem) !important;
+    line-height: 0.96 !important;
   }
 
   .ak-hero-console {
@@ -717,7 +972,22 @@ nav .btn-accent-glow::after,
     right: auto;
     width: 100%;
     min-width: 0;
-    margin: 1.5rem 0 0;
+    margin: 1.2rem 0 0;
+    padding: 0.85rem;
+  }
+
+  .ak-command-orbit {
+    min-height: 6.8rem;
+  }
+
+  .ak-command-loop {
+    grid-template-columns: 1fr;
+    border-radius: 0.85rem;
+    text-align: center;
+  }
+
+  .ak-command-loop i {
+    display: none;
   }
 
   .ak-console-grid {
