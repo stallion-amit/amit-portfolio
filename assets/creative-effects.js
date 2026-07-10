@@ -23,20 +23,10 @@
       consolePanel.setAttribute("aria-label", "Execution operating model");
       consolePanel.innerHTML =
         '<div class="ak-console-top"><span>Execution OS</span><span class="ak-console-live">Ready</span></div>' +
-        '<div class="ak-command-orbit" aria-hidden="true">' +
-        '<span></span><span></span><span></span><strong>AK</strong>' +
-        "</div>" +
-        '<div class="ak-command-copy"><span>How I create leverage</span><strong>Ambiguity into operating rhythm.</strong><p>AI, platform, and transformation programs shaped into clear decisions, safer launches, and measurable business outcomes.</p></div>' +
-        '<div class="ak-command-loop" aria-hidden="true">' +
-        "<span>Map</span><i></i><span>Align</span><i></i><span>Launch</span><i></i><span>Scale</span>" +
-        "</div>" +
-        '<div class="ak-signal-board">' +
-        "<div><span>Role fit</span><strong>Senior TPM / Transformation</strong></div>" +
-        "<div><span>Industries</span><strong>Global, cross-domain</strong></div>" +
-        "<div><span>Work model</span><strong>Remote / Hybrid</strong></div>" +
-        "<div><span>Operating style</span><strong>Evidence-led execution</strong></div>" +
+        '<div class="ak-execution-rail" aria-hidden="true">' +
+        "<span>Ambiguity</span><i></i><span>Alignment</span><i></i><span>Launch</span><i></i><span>Scale</span>" +
         '</div>' +
-        '<div class="ak-console-note">Built for high-stakes programs where leadership needs truth, pace, and trust.</div>';
+        '<div class="ak-command-copy"><span>Global · Remote · Hybrid</span><strong>Senior TPM, AI/platform transformation, and cross-domain execution leadership.</strong></div>';
 
       if (isMobile && heroTextColumn) {
         heroTextColumn.appendChild(consolePanel);
@@ -46,34 +36,6 @@
       } else {
         hero.appendChild(consolePanel);
       }
-    }
-
-    if (hero && !hero.nextElementSibling?.classList.contains("ak-proof-marquee")) {
-      var marquee = document.createElement("div");
-      marquee.className = "ak-proof-marquee";
-      marquee.setAttribute("aria-label", "Portfolio focus areas");
-      marquee.innerHTML =
-        '<div class="ak-proof-track">' +
-        "<span>AI transformation</span><i></i><span>Platform scale</span><i></i><span>Regulated execution</span><i></i><span>Global collaboration</span><i></i><span>Remote / hybrid ready</span><i></i>" +
-        "<span>AI transformation</span><i></i><span>Platform scale</span><i></i><span>Regulated execution</span><i></i><span>Global collaboration</span><i></i><span>Remote / hybrid ready</span><i></i>" +
-        "</div>";
-      hero.insertAdjacentElement("afterend", marquee);
-    }
-
-    if (!reduceMotion && !isMobile) {
-      var spotlight = document.createElement("div");
-      spotlight.className = "ak-spotlight";
-      document.body.appendChild(spotlight);
-
-      window.addEventListener(
-        "pointermove",
-        function (event) {
-          document.body.classList.add("ak-pointer");
-          document.documentElement.style.setProperty("--ak-x", event.clientX + "px");
-          document.documentElement.style.setProperty("--ak-y", event.clientY + "px");
-        },
-        { passive: true }
-      );
     }
 
     var revealTargets = document.querySelectorAll(
@@ -115,28 +77,6 @@
       element.classList.add("ak-card-tilt");
 
       if (reduceMotion || isMobile) return;
-
-      element.addEventListener(
-        "pointermove",
-        function (event) {
-          var rect = element.getBoundingClientRect();
-          var x = ((event.clientX - rect.left) / rect.width) * 100;
-          var y = ((event.clientY - rect.top) / rect.height) * 100;
-          var rotateY = (x - 50) / 28;
-          var rotateX = (50 - y) / 32;
-
-          element.style.setProperty("--ak-mx", x + "%");
-          element.style.setProperty("--ak-my", y + "%");
-          element.style.setProperty("--ak-rx", rotateX + "deg");
-          element.style.setProperty("--ak-ry", rotateY + "deg");
-        },
-        { passive: true }
-      );
-
-      element.addEventListener("pointerleave", function () {
-        element.style.removeProperty("--ak-rx");
-        element.style.removeProperty("--ak-ry");
-      });
     });
   });
 })();
